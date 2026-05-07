@@ -1,0 +1,140 @@
+{
+  "seed": 42,
+  "device": "auto",
+  "data": {
+    "target": {
+      "direct_pairing": true,
+      "prefilter_bad_samples": false,
+      "latent_field": "mu",
+      "dataset_dtype": "float32",
+      "train": [
+        "${DATA_ROOT}/pairs/train.csv"
+      ],
+      "val": [
+        "${DATA_ROOT}/pairs/val.csv"
+      ],
+      "test": [
+        "${DATA_ROOT}/pairs/test.csv"
+      ],
+      "csv_map": {
+        "path": "vae_latent_path",
+        "target_path": "target_latent_path",
+        "target_source_path": "target_voxel_data_path",
+        "subject": "Subject",
+        "sequence": "sequence_id",
+        "anchor_chunk": "anchor_chunk_id",
+        "target_chunk": "target_chunk_id",
+        "direction": "pair_direction",
+        "source_path": "voxel_data_path",
+        "fc_path": "fc_embedding_path",
+        "mri_path": "MRI_embedding_path"
+      }
+    },
+    "conditions": {
+      "fc": {
+        "enabled": true,
+        "required": true,
+        "alignment": "subject_chunk",
+        "dtype": "float32",
+        "array_field": "",
+        "mode": "vector",
+        "num_tokens": 1
+      },
+      "mri": {
+        "enabled": true,
+        "required": false,
+        "alignment": "subject",
+        "dtype": "float32",
+        "array_field": "",
+        "mode": "vector",
+        "num_tokens": 1
+      },
+      "metadata": {
+        "enabled": false,
+        "required": false,
+        "path": "",
+        "subject_col": "subject_id",
+        "categorical_cols": [],
+        "mode": "vector",
+        "num_tokens": 0
+      },
+      "global_fusion": {
+        "mode": "attn",
+        "num_heads": 2,
+        "dropout": 0.0
+      }
+    },
+    "missing_required_policy": "drop",
+    "verify_paths": true
+  },
+  "task": {
+    "mode": "next_only",
+    "allow_boundary_single_direction": true,
+    "direction_sampling": {
+      "next_prob": 1.0,
+      "prev_prob": 0.0
+    }
+  },
+  "model": {
+    "patch_size": [
+      1,
+      1,
+      1
+    ],
+    "hidden_dim": 128,
+    "depth": 4,
+    "num_heads": 4,
+    "mlp_ratio": 4.0,
+    "dropout": 0.1
+  },
+  "diffusion": {
+    "num_steps": 100,
+    "schedule": "cosine",
+    "cosine_s": 0.008,
+    "beta_start": 0.0001,
+    "beta_end": 0.02
+  },
+  "conditioning": {
+    "drop_prob_mri": 0.2,
+    "drop_prob_meta": 0.2
+  },
+  "loss": {
+    "prediction_type": "v",
+    "x0_aux_weight": 0.05
+  },
+  "diversity": {
+    "enabled": false,
+    "target_stream_only": true,
+    "long_residual": true,
+    "loss_weight": 0.03,
+    "pair_strategy": "symmetric",
+    "loss_terms": [
+      "orth",
+      "mi",
+      "disp"
+    ],
+    "capture_layers": [
+      1,
+      3
+    ],
+    "warmup_steps": 2000
+  },
+  "training": {
+    "output_root": "${OUTPUT_ROOT}/dit_train",
+    "batch_size": 1,
+    "num_workers": 0,
+    "epochs": 1,
+    "lr": 0.0002,
+    "weight_decay": 0.01,
+    "use_amp": false,
+    "amp_dtype": "bf16",
+    "val_every": 1,
+    "save_every": 1,
+    "save_latest_every": 1,
+    "keep_epoch_checkpoints": false,
+    "grad_clip_norm": 1.0,
+    "skip_nonfinite_batch": true,
+    "nonfinite_log_limit": 20,
+    "gpu_ids": []
+  }
+}

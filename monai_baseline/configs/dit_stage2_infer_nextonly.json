@@ -1,0 +1,146 @@
+{
+  "seed": 42,
+  "device": "cuda",
+  "amp": true,
+  "manifest_paths": {
+    "train": "",
+    "val": ""
+  },
+  "task_vocab_path": "../artifacts/metadata/task_vocab.json",
+  "latent_stats_path": "../artifacts/metadata/latent_stats.json",
+  "loader": {
+    "batch_size": 24,
+    "num_workers": 8,
+    "pin_memory": true,
+    "persistent_workers": true,
+    "drop_last": false
+  },
+  "model": {
+    "spatial_dims": 3,
+    "latent_channels": 4,
+    "num_frames": 40,
+    "num_res_blocks": 2,
+    "num_channels": [
+      96,
+      224,
+      320
+    ],
+    "attention_levels": [
+      false,
+      true,
+      true
+    ],
+    "num_head_channels": [
+      0,
+      224,
+      320
+    ],
+    "norm_num_groups": 32,
+    "norm_eps": 1e-06,
+    "resblock_updown": true
+  },
+  "diffusion": {
+    "num_train_timesteps": 1000,
+    "schedule": "scaled_linear_beta",
+    "beta_start": 0.0015,
+    "beta_end": 0.0195,
+    "clip_sample": false,
+    "prediction_type": "v"
+  },
+  "optimizer": {
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0.01
+  },
+  "training": {
+    "max_epochs": 50,
+    "max_steps": 100000,
+    "log_every": 20,
+    "val_every": 5000,
+    "save_every": 2000,
+    "val_every_epochs": 1,
+    "save_every_epochs": 1,
+    "class_dropout_prob": 0.05,
+    "ema_decay": 0.9999,
+    "max_val_batches": 20,
+    "use_ddp": false,
+    "ddp_find_unused_parameters": false,
+    "process_group_timeout_hours": 24.0
+  },
+  "warm_start": {
+    "checkpoint_path": null,
+    "strict": false
+  },
+  "resume_from": null,
+  "launcher": {
+    "prepare_split": false
+  },
+  "output_dir": "../artifacts/dit_stage2_nextonly",
+  "conditioning": {
+    "use_anchor_fc_condition": true,
+    "pair_mode": "next_only",
+    "anchor_fc_scale": 1.0,
+    "fc": {
+      "required": true,
+      "path_field": "fc_embedding_path",
+      "npz_key": "auto",
+      "dim_hint": 0
+    },
+    "fc_missing_policy": "zero"
+  },
+  "stage2_visualization": {
+    "enabled": false,
+    "trigger_mode": "steps",
+    "every_n_steps": 1000,
+    "every_n_epochs": 1,
+    "num_samples": 2,
+    "num_inference_steps": 1000,
+    "decode_batch_size": 8,
+    "dpi": 130,
+    "seed": 20260416,
+    "output_subdir": "visualizations/stage2_next_window",
+    "vqvae_model_config_json": "../configs/vqvae_extract_4d.json",
+    "vqvae_checkpoint": "../weights/checkpoints/vqvae_best.pt",
+    "use_ema_for_sampling": true
+  },
+  "data": {
+    "use_universal_split_csv": true,
+    "universal_split_root": "../artifacts/universal_split",
+    "datasets": [
+      "DATASET_NAME"
+    ],
+    "default_task": "rest"
+  },
+  "model_type": "dit3d",
+  "dit": {
+    "patch_size": 4,
+    "d_model": 768,
+    "depth": 12,
+    "num_heads": 12,
+    "mlp_ratio": 4.0,
+    "dropout": 0.0,
+    "pos_embed": "sincos",
+    "fc_token_count": 4,
+    "anchor_token_count": 8
+  },
+  "infer": {
+    "splits": [
+      "test"
+    ],
+    "checkpoint_path": "../weights/checkpoints/dit_stage2_nextonly_best.pt",
+    "num_inference_steps": 1000,
+    "sampling_seed": 20260416,
+    "skip_existing": true,
+    "use_ema": true,
+    "output_root": "../artifacts/dit_stage2_nextonly/infer_next_latents_1000step",
+    "loader": {
+      "batch_size": 1,
+      "num_workers": 0,
+      "pin_memory": true,
+      "persistent_workers": false
+    }
+  }
+}

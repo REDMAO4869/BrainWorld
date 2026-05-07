@@ -1,0 +1,107 @@
+{
+  "seed": 42,
+  "device": "auto",
+  "data": {
+    "train": [
+      "${DATA_ROOT}/splits/train.csv"
+    ],
+    "val": [
+      "${DATA_ROOT}/splits/val.csv"
+    ],
+    "test": [
+      "${DATA_ROOT}/splits/test.csv"
+    ],
+    "recursive": true,
+    "extensions": [
+      ".npy",
+      ".npz"
+    ],
+    "layout": "DHWT",
+    "t_frames": 40,
+    "temporal_crop_train": "random",
+    "temporal_crop_eval": "center",
+    "normalize": "none",
+    "train_subset_ratio": 1.0,
+    "fg_threshold": 1e-06,
+    "brain_mask_path": "",
+    "audit_preview": 3,
+    "bbox_crop": {
+      "enabled": false
+    },
+    "skip_corrupt_files": true,
+    "skip_corrupt_retry_limit": 64,
+    "skip_corrupt_log_limit": 20,
+    "precheck_corrupt_files": false
+  },
+  "model": {
+    "in_channels": 1,
+    "stage_channels": [
+      16,
+      32,
+      64,
+      96
+    ],
+    "latent_dim": 16,
+    "res_blocks_per_stage": 2,
+    "dropout": 0.0,
+    "spatial_kernel_size": 5,
+    "temporal_kernel_size": 5,
+    "temporal_residual_scale": 0.1,
+    "logvar_min": -6.0,
+    "logvar_max": 4.0,
+    "wavelet_fusion_enabled": true,
+    "wavelet_energy_channels": 8,
+    "wavelet_stages": [
+      "enc2",
+      "enc3",
+      "dec1",
+      "dec2"
+    ],
+    "num_spatial_downsamples": 3,
+    "temporal_mode": "spatial_only",
+    "spatial_only_frame_chunk_size": 0
+  },
+  "loss": {
+    "fg_weight": 1.0,
+    "bg_weight": 0.05,
+    "bg_zero_weight": 0.02,
+    "wavelet_weight": 0.05,
+    "temporal_weight": 0.05,
+    "beta_kl": 0.0001
+  },
+  "training": {
+    "num_workers": 2,
+    "epochs": 10,
+    "lr": 0.0003,
+    "weight_decay": 0.001,
+    "grad_clip": 1.0,
+    "use_amp": true,
+    "amp_dtype": "bf16",
+    "gpu_ids": [
+      0
+    ],
+    "save_every": 1,
+    "val_every": 1,
+    "kl_warmup_epochs": 0,
+    "deterministic_warmup_epochs": 1,
+    "early_stopping": {
+      "enabled": false,
+      "metric": "val_loss",
+      "mode": "min",
+      "patience": 8,
+      "min_delta": 0.0001
+    },
+    "recon_monitor": {
+      "enabled": false,
+      "every_n_steps": 1000,
+      "num_middle_frames": 3,
+      "max_events_per_epoch": 10,
+      "output_dir": "train_recon_monitor",
+      "save_npz": false
+    },
+    "use_ddp": false,
+    "resume_from": "",
+    "output_root": "${OUTPUT_ROOT}/vae_train",
+    "batch_size": 1
+  }
+}

@@ -1,0 +1,12 @@
+# Base runtime
+numpy>=1.24
+torch>=2.4
+monai>=1.5
+nibabel>=5.0
+tqdm>=4.66
+matplotlib>=3.8
+
+# Optional dependency note:
+# The VQ-VAE and MONAI diffusion utilities expect the `generative` Python package from
+# MONAI GenerativeModels. Install it separately so `import generative` works, set
+# GENERATIVE_ROOT to a local checkout, or vendor the source tree under third_party/GenerativeModels.

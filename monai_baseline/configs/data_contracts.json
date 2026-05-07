@@ -1,0 +1,41 @@
+{
+  "stage1_manifest_jsonl": {
+    "description": "Row-based manifest for Stage-1 VQ-VAE training and 4D latent extraction.",
+    "required_fields": {
+      "image": "Path to a 4D fMRI clip file. Relative paths are resolved against the JSONL file directory by the public Stage-1 scripts.",
+      "task": "Task label or condition name.",
+      "subject": "Subject identifier.",
+      "session": "Session identifier.",
+      "segment": "Segment index for the 4D clip."
+    },
+    "optional_fields": {
+      "image_key": "Key used when the source file is an NPZ archive.",
+      "layout": "Input layout for the 4D array; supported values are xyzt and txyz."
+    },
+    "examples": [
+      "examples/manifests/train.example.jsonl",
+      "examples/manifests/val.example.jsonl",
+      "examples/manifests/test.example.jsonl"
+    ]
+  },
+  "stage2_universal_split_csv": {
+    "description": "CSV format for next-only latent prediction. Each row pairs an anchor latent with the next-window target latent and an anchor FC embedding.",
+    "required_fields": {
+      "Subject": "Subject identifier.",
+      "latent_path": "Anchor latent path. Relative paths are resolved against the CSV file directory by the public Stage-2 scripts.",
+      "fc_embedding_path": "FC embedding path for the anchor window. Relative paths are resolved against the CSV file directory by the public Stage-2 scripts.",
+      "target_latent_path": "Target latent path for the next window. Relative paths are resolved against the CSV file directory by the public Stage-2 scripts.",
+      "task": "Task label or condition name.",
+      "session": "Session identifier."
+    },
+    "examples": [
+      "examples/universal_split/DATASET_NAME/train.example.csv",
+      "examples/universal_split/DATASET_NAME/val.example.csv",
+      "examples/universal_split/DATASET_NAME/test.example.csv"
+    ]
+  },
+  "metadata_examples": {
+    "task_vocab_example": "examples/metadata/task_vocab.example.json",
+    "latent_stats_example": "examples/metadata/latent_stats.example.json"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "seed": 42,
+  "device": "cuda",
+  "amp": true,
+  "vqvae_checkpoint": "../weights/checkpoints/vqvae_best.pt",
+  "manifest_paths": {
+    "train": "../artifacts/manifests/train.jsonl",
+    "val": "../artifacts/manifests/val.jsonl",
+    "test": "../artifacts/manifests/test.jsonl"
+  },
+  "data": {
+    "image_key": "auto",
+    "layout": "xyzt",
+    "target_spatial_size": [
+      96,
+      96,
+      96
+    ],
+    "target_num_frames": 40,
+    "normalization": "zscore_nonzero",
+    "skip_corrupt_files": true,
+    "skip_corrupt_retry_limit": 64,
+    "skip_corrupt_log_limit": 20
+  },
+  "model": {
+    "spatial_dims": 3,
+    "in_channels": 1,
+    "out_channels": 1,
+    "num_channels": [
+      96,
+      192
+    ],
+    "num_res_layers": 2,
+    "num_res_channels": [
+      96,
+      192
+    ],
+    "downsample_parameters": [
+      [
+        2,
+        4,
+        1,
+        1
+      ],
+      [
+        2,
+        4,
+        1,
+        1
+      ]
+    ],
+    "upsample_parameters": [
+      [
+        2,
+        4,
+        1,
+        1,
+        0
+      ],
+      [
+        2,
+        4,
+        1,
+        1,
+        0
+      ]
+    ],
+    "num_embeddings": 1024,
+    "embedding_dim": 4,
+    "commitment_cost": 0.25,
+    "decay": 0.99,
+    "epsilon": 1e-05,
+    "dropout": 0.0,
+    "ddp_sync": false,
+    "use_checkpointing": false
+  },
+  "cache": {
+    "output_root": "../artifacts/vqvae_latents",
+    "dtype": "float16",
+    "quantized": true,
+    "stats_split": "train",
+    "max_items": null
+  },
+  "training": {
+    "use_ddp": false,
+    "ddp_find_unused_parameters": false,
+    "process_group_timeout_hours": 24.0
+  }
+}

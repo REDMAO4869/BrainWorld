@@ -1,0 +1,3 @@
+{
+  "note": "Runtime smoke configs are generated under examples/smoke/runtime/ by run_smoke.py"
+}
