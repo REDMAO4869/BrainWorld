@@ -11,6 +11,18 @@ The repository includes the core code, public config templates, launch scripts, 
 
 A MONAI-style baseline is maintained separately in a companion repository, for example `../monai_baseline`.
 
+## Motivation
+
+![BrainWorld paper Figure 1: motivation](docs/assets/brainworld-motivation.png)
+
+**Figure 1. Motivation.** BrainWorld uses sMRI as anatomical context for controllable 4D fMRI generation, addressing the task and modality-role mismatches illustrated in the paper. Structural conditioning supports both generative modeling and downstream representation learning.
+
+## Framework
+
+![BrainWorld paper Figure 2: framework overview](docs/assets/brainworld-framework.png)
+
+**Figure 2. Framework overview.** The structural-dynamic analogy, datasets, preprocessing, and VAE-DiT architecture. Past functional connectivity, sMRI, and optional audiovisual conditions guide latent denoising, while intermediate DiT features support downstream tasks.
+
 ## Animated Overview
 
 ![BrainWorld motivation, framework, and downstream prediction](docs/assets/brainworld-framework.gif)
