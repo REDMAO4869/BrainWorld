@@ -11,6 +11,12 @@ The repository includes the core code, public config templates, launch scripts, 
 
 A MONAI-style baseline is maintained separately in a companion repository, for example `../monai_baseline`.
 
+## Animated Overview
+
+![BrainWorld motivation, framework, and downstream prediction](docs/assets/brainworld-framework.gif)
+
+The animation presents anatomy-constrained dynamics, VAE compression, conditional diffusion, autoregressive generation, and downstream prediction. BOLD activity is schematic.
+
 ## Motivation
 
 ![BrainWorld paper Figure 1: motivation](docs/assets/brainworld-motivation.png)
@@ -22,12 +28,6 @@ A MONAI-style baseline is maintained separately in a companion repository, for e
 ![BrainWorld paper Figure 2: framework overview](docs/assets/brainworld-framework.png)
 
 **Figure 2. Framework overview.** The structural-dynamic analogy, datasets, preprocessing, and VAE-DiT architecture. Past functional connectivity, sMRI, and optional audiovisual conditions guide latent denoising, while intermediate DiT features support downstream tasks.
-
-## Animated Overview
-
-![BrainWorld motivation, framework, and downstream prediction](docs/assets/brainworld-framework.gif)
-
-The animation presents anatomy-constrained dynamics, VAE compression, conditional diffusion, autoregressive generation, and downstream prediction. BOLD activity is schematic.
 
 ## Repository Layout
 
