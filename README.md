@@ -9,6 +9,12 @@ The repository includes the core code, public config templates, launch scripts, 
 
 A MONAI-style baseline is maintained separately in a companion repository, for example `../monai_baseline`.
 
+## Animated Overview
+
+![BrainWorld motivation, framework, and downstream prediction](docs/assets/brainworld-framework.gif)
+
+The animation presents anatomy-constrained dynamics, VAE compression, conditional diffusion, autoregressive generation, and downstream prediction. BOLD activity is schematic.
+
 ## Repository Layout
 
 - `vae/`
