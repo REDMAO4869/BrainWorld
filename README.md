@@ -1,4 +1,6 @@
-# BrainWorld
+<p align="center">
+  <img src="./docs/assets/brainworld-logo.svg" alt="BrainWorld" width="480" />
+</p>
 
 BrainWorld is a research codebase for 4D fMRI representation learning and conditional generation. The overall pipeline has two stages:
 
