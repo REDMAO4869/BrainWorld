@@ -29,6 +29,22 @@ The animation presents anatomy-constrained dynamics, VAE compression, conditiona
 
 **Figure 2. Framework overview.** The structural-dynamic analogy, datasets, preprocessing, and VAE-DiT architecture. Past functional connectivity, sMRI, and optional audiovisual conditions guide latent denoising, while intermediate DiT features support downstream tasks.
 
+## [Preceding Work](https://github.com/REDMAO4869/Brain-DiT)
+
+[**Brain-DiT**](https://github.com/REDMAO4869/Brain-DiT) ([paper](https://arxiv.org/abs/2604.12683)) is the preceding work to BrainWorld. It applies metadata-conditioned diffusion pretraining to region-of-interest (ROI) fMRI time series, learning multi-state representations that transfer to downstream tasks. BrainWorld extends this generative modeling direction to whole-brain voxel-level 4D fMRI, using sMRI as anatomical context for conditional generation.
+
+<p align="center">
+  <a href="https://github.com/REDMAO4869/Brain-DiT">
+    <img src="./docs/assets/brain-dit-framework-paper.png" alt="Brain-DiT framework: metadata-conditioned pretraining and downstream adaptation" width="900" />
+  </a>
+  <br />
+  <sub>Framework from the Brain-DiT paper: metadata-conditioned pretraining and downstream adaptation.</sub>
+</p>
+
+## [Related Work](https://redmao4869.github.io/)
+
+More related projects and publications are available on the [research homepage](https://redmao4869.github.io/).
+
 ## Repository Layout
 
 - `vae/`
