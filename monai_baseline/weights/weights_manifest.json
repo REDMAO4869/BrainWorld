@@ -1,0 +1,20 @@
+{
+  "weights": [
+    {
+      "logical_name": "vqvae_stage1_best",
+      "expected_filename": "vqvae_best.pt",
+      "relative_destination": "weights/checkpoints/vqvae_best.pt",
+      "sha256": "52cd0f9e8cc7c6653ed4317cb2e8cb49b6b0889fa319ba90d33e9f60f50a37a9",
+      "filesize_bytes": 148528196,
+      "notes": "MONAI Stage-1 VQ-VAE checkpoint used by scripts/build_latent_cache.py. The checkpoint payload must contain model_state_dict for strict loading."
+    },
+    {
+      "logical_name": "dit_stage2_nextonly_best",
+      "expected_filename": "dit_stage2_nextonly_best.pt",
+      "relative_destination": "weights/checkpoints/dit_stage2_nextonly_best.pt",
+      "sha256": "f67e89cf97203cd9256d7dada1064b722b7770891c83dde18d7f43c8f5ce6e38",
+      "filesize_bytes": 4879245312,
+      "notes": "Stage-2 DiT next-only checkpoint for fc -> next latent inference. Copy or rename the selected diffusion_best.pt to this logical filename."
+    }
+  ]
+}

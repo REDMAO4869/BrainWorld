@@ -1,0 +1,162 @@
+{
+  "name": "smoke_downstream",
+  "seed": 42,
+  "device": "cpu",
+  "stop_on_error": true,
+  "mode": "linear_probe",
+  "ckpt": {
+    "checkpoint": "${WEIGHTS_ROOT}/dit_checkpoint.pt",
+    "auto_load_model_config": true,
+    "allow_condition_mismatch": false
+  },
+  "data": {
+    "target": {
+      "direct_pairing": true,
+      "prefilter_bad_samples": false,
+      "latent_field": "mu",
+      "dataset_dtype": "float32",
+      "train": [
+        "${DATA_ROOT}/pairs/train.csv"
+      ],
+      "val": [
+        "${DATA_ROOT}/pairs/val.csv"
+      ],
+      "test": [
+        "${DATA_ROOT}/pairs/test.csv"
+      ],
+      "csv_map": {
+        "path": "vae_latent_path",
+        "target_path": "target_latent_path",
+        "target_source_path": "target_voxel_data_path",
+        "subject": "Subject",
+        "sequence": "sequence_id",
+        "anchor_chunk": "anchor_chunk_id",
+        "target_chunk": "target_chunk_id",
+        "direction": "pair_direction",
+        "source_path": "voxel_data_path",
+        "fc_path": "fc_embedding_path",
+        "mri_path": "MRI_embedding_path"
+      }
+    },
+    "conditions": {
+      "fc": {
+        "enabled": true,
+        "required": true,
+        "alignment": "subject_chunk",
+        "dtype": "float32",
+        "array_field": "",
+        "mode": "vector",
+        "num_tokens": 1
+      },
+      "mri": {
+        "enabled": true,
+        "required": false,
+        "alignment": "subject",
+        "dtype": "float32",
+        "array_field": "",
+        "mode": "vector",
+        "num_tokens": 1
+      },
+      "metadata": {
+        "enabled": false,
+        "required": false,
+        "path": "",
+        "subject_col": "subject_id",
+        "categorical_cols": [],
+        "mode": "vector",
+        "num_tokens": 0
+      },
+      "global_fusion": {
+        "mode": "attn",
+        "num_heads": 2,
+        "dropout": 0.0
+      }
+    },
+    "missing_required_policy": "drop",
+    "verify_paths": true
+  },
+  "embedding": {
+    "timestep": 5,
+    "t_list": [
+      1,
+      5
+    ],
+    "capture_layers": [
+      -1
+    ],
+    "pool": "mean",
+    "noise_mode": "per_subject",
+    "noise_seed": 0
+  },
+  "aggregator": {
+    "type": "mean",
+    "use_layernorm": false,
+    "temperature": 1.0,
+    "q_len": 1,
+    "attn_heads": 1,
+    "attn_dropout": 0.0,
+    "gate_hidden": 32,
+    "gate_dropout": 0.0
+  },
+  "head": {
+    "mlp_hidden": 32,
+    "mlp_dropout": 0.0
+  },
+  "optim": {
+    "lr_dit": 0.0001,
+    "lr_head": 0.001,
+    "lr_agg": 0.001,
+    "weight_decay_dit": 0.0,
+    "weight_decay_head": 0.0,
+    "weight_decay_agg": 0.0,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08
+  },
+  "train": {
+    "epochs": 2,
+    "patience": 2,
+    "batch_size": 2,
+    "num_workers": 0,
+    "amp": false,
+    "grad_clip_norm": 1.0,
+    "best_metric": "f1_weighted",
+    "use_class_weights": false,
+    "eval_test_each_epoch": true,
+    "history_flush_each_epoch": true,
+    "print_epoch_metrics": true
+  },
+  "linear_probe_cache": {
+    "enabled": true,
+    "reuse_if_exists": false,
+    "dtype": "float32",
+    "extract_batch_size": 1,
+    "extract_num_workers": 0,
+    "standardize": true,
+    "scope": "task",
+    "root": "${CACHE_ROOT}/downstream_cache"
+  },
+  "output": {
+    "out_root": "${OUTPUT_ROOT}/downstream",
+    "cache_root": "${CACHE_ROOT}/downstream_cache",
+    "run_name": "smoke_downstream"
+  },
+  "ddp": {
+    "find_unused_parameters": false,
+    "find_unused_parameters_aux": false,
+    "timeout_sec": 180
+  },
+  "label": {
+    "label_csv_path": "${DATA_ROOT}/labels.csv",
+    "subject_col": "Subject",
+    "target_col": "Label",
+    "duplicate_policy_cls": "first",
+    "duplicate_policy_reg": "first"
+  },
+  "task_head": {
+    "task_type": "classification",
+    "num_classes": 2
+  }
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="128" viewBox="0 0 560 128" role="img" aria-labelledby="title desc">
+  <title id="title">BrainWorld</title>
+  <desc id="desc">BrainWorld wordmark with pink Brain lettering, a blue-to-green World gradient, and a globe icon.</desc>
+  <defs>
+    <linearGradient id="world-gradient" gradientUnits="userSpaceOnUse" x1="229" y1="0" x2="412" y2="0">
+      <stop offset="0%" stop-color="#2789c7"/>
+      <stop offset="52%" stop-color="#249cad"/>
+      <stop offset="100%" stop-color="#4a9f77"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="128" rx="12" fill="#ffffff"/>
+  <text x="65" y="88" font-family="Inter, Arial, Helvetica, sans-serif" font-size="68" font-weight="700" letter-spacing="-2"><tspan fill="#d95d8b">Brain</tspan><tspan fill="url(#world-gradient)">World</tspan></text>
+  <text x="432" y="87" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif" font-size="58">🌍</text>
+</svg>

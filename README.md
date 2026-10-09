@@ -1,0 +1,110 @@
+<p align="center">
+  <img src="./docs/assets/brainworld-logo.svg" alt="BrainWorld" width="480" />
+</p>
+
+BrainWorld is a research codebase for 4D fMRI representation learning and conditional generation. The overall pipeline has two stages:
+
+1. `VAE stage`: compress 4D fMRI volumes from voxel space into a latent space, with support for latent extraction and decoding.
+2. `DiT stage`: perform conditional diffusion modeling in latent space for training and generation.
+
+The repository includes the core code, public config templates, launch scripts, and supporting documentation for training, inference, and further research development.
+
+A MONAI-style baseline is maintained separately in a companion repository, for example `../monai_baseline`.
+
+## Animated Overview
+
+![BrainWorld motivation, framework, and downstream prediction](docs/assets/brainworld-framework.gif)
+
+The animation presents anatomy-constrained dynamics, VAE compression, conditional diffusion, autoregressive generation, and downstream prediction. BOLD activity is schematic.
+
+## Motivation
+
+![BrainWorld paper Figure 1: motivation](docs/assets/brainworld-motivation.png)
+
+**Figure 1. Motivation.** BrainWorld uses sMRI as anatomical context for controllable 4D fMRI generation, addressing the task and modality-role mismatches illustrated in the paper. Structural conditioning supports both generative modeling and downstream representation learning.
+
+## Framework
+
+![BrainWorld paper Figure 2: framework overview](docs/assets/brainworld-framework.png)
+
+**Figure 2. Framework overview.** The structural-dynamic analogy, datasets, preprocessing, and VAE-DiT architecture. Past functional connectivity, sMRI, and optional audiovisual conditions guide latent denoising, while intermediate DiT features support downstream tasks.
+
+## [Preceding Work](https://github.com/REDMAO4869/Brain-DiT)
+
+[**Brain-DiT**](https://github.com/REDMAO4869/Brain-DiT) ([paper](https://arxiv.org/abs/2604.12683)) is the preceding work to BrainWorld. It applies metadata-conditioned diffusion pretraining to region-of-interest (ROI) fMRI time series, learning multi-state representations that transfer to downstream tasks. BrainWorld extends this generative modeling direction to whole-brain voxel-level 4D fMRI, using sMRI as anatomical context for conditional generation.
+
+<p align="center">
+  <a href="https://github.com/REDMAO4869/Brain-DiT">
+    <img src="./docs/assets/brain-dit-framework-paper.png" alt="Brain-DiT framework: metadata-conditioned pretraining and downstream adaptation" width="900" />
+  </a>
+  <br />
+  <sub>Framework from the Brain-DiT paper: metadata-conditioned pretraining and downstream adaptation.</sub>
+</p>
+
+## [Related Work](https://redmao4869.github.io/)
+
+More related projects and publications are available on the [research homepage](https://redmao4869.github.io/).
+
+More of our work can be found at [**fMRI Atlas**](https://www.fmriatlas.com/).
+
+## Repository Layout
+
+- `vae/`
+  - VAE training, latent extraction, and decoding code
+- `dit/`
+  - Conditional DiT training and inference code
+- `configs/`
+  - Public config templates
+- `scripts/`
+  - Common launch scripts
+- `manifests/`
+  - Data manifest templates and examples
+- `weights/`
+  - Checkpoint notes and placeholder paths
+- `docs/`
+  - Supporting documentation
+- `outputs/`
+  - Runtime output directory
+
+## Main Workflow
+
+The recommended workflow is:
+
+1. Train the VAE
+2. Extract latent representations
+3. Train the conditional DiT
+4. Run inference or generation
+5. Decode latents back to voxel space when needed
+
+In short:
+
+- `VAE` handles representation compression and reconstruction
+- `DiT` handles conditional generation in latent space
+
+## Quick Start
+
+You can run the main Python entrypoints directly:
+
+```bash
+python vae/train_wf_vae.py --config configs/vae/wf_vae_train_spatial_only.json
+python vae/extract_wf_latents.py --config configs/vae/wf_vae_extract_spatial_only_train.json
+python dit/train_cond_dit.py --config configs/dit/cond_dit_train_spatial_only_public.json
+python dit/infer_cond_dit.py --config configs/dit/cond_dit_infer_public.json
+```
+
+You can also use the launch scripts under `scripts/`.
+
+## Weights
+
+Recommended checkpoint paths:
+
+- `weights/vae/best.pt`
+- `weights/dit/best.pt`
+
+For checkpoint download and distribution details, see `docs/weight_distribution.md`.
+
+## Notes
+
+- `configs/` provides public config templates
+- `manifests/` provides data manifest templates and examples
+- `outputs/` stores runtime results

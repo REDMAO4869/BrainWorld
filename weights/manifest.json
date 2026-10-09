@@ -1,0 +1,26 @@
+[
+  {
+    "name": "brainworld_vae_spatial_only_best",
+    "stage": "vae",
+    "task": "train/extract/decode",
+    "source": "release_asset",
+    "release_asset": "brainworld_vae_spatial_only_best.pt",
+    "sha256": "1a57dd4937f91c3d6e72c5167fa1edef4af93bafc1fe1ba357616586752a11bb",
+    "size_bytes": 42823140,
+    "config": "configs/vae/train.template.json",
+    "expected_output_shape": "T,L,D,H,W from extraction",
+    "notes": "Recommended public VAE checkpoint prepared from the spatial-only route."
+  },
+  {
+    "name": "brainworld_dit_recommended_best",
+    "stage": "dit",
+    "task": "train/infer/generate",
+    "source": "release_asset",
+    "release_asset": "brainworld_dit_recommended_best.pt",
+    "sha256": "473d5d6124486cad412fd06f2550a91c31e1e290dd8b3cf67a1db4b1980d2d75",
+    "size_bytes": 1373283877,
+    "config": "configs/dit/train.template.json",
+    "expected_output_shape": "T,L,D,H,W latent target",
+    "notes": "Recommended public DIT checkpoint prepared for conditional inference and generation."
+  }
+]
