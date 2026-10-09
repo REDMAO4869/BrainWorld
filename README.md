@@ -45,6 +45,8 @@ The animation presents anatomy-constrained dynamics, VAE compression, conditiona
 
 More related projects and publications are available on the [research homepage](https://redmao4869.github.io/).
 
+More of our work can be found at [**fMRI Atlas**](https://www.fmriatlas.com/).
+
 ## Repository Layout
 
 - `vae/`
